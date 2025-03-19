@@ -1,4 +1,6 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function AddBeerPage() {
   // State variables to store the values of the form inputs. You can leave these as they are.
@@ -20,15 +22,70 @@ function AddBeerPage() {
   const handleBrewersTips = (e) => setBrewersTips(e.target.value);
   const handleAttenuationLevel = (e) => setAttenuationLevel(e.target.value);
   const handleContributedBy = (e) => setContributedBy(e.target.value);
-
-
+    
 
   // TASK:
   // 1. Create a function to handle the form submission and send the form data to the Beers API to create a new beer.
+  function handleSubmit(event) {
+    event.preventDefault();
+    const newBeer = {
+      name,
+      tagline,
+      description,
+      imageUrl,
+      firstBrewed,
+      brewersTips,
+      attenuationLevel,
+      contributedBy,
+    };
+  
+
   // 2. Use axios to make a POST request to the Beers API.
+  axios
+    .post("https://ih-beers-api2.herokuapp.com/beers/new", newBeer)
+    .then((response) => {
+      console.log("new beer created !", response.data);
+      navigate("/beers");
+    })
+    .catch((error) => console.log(error))
+    .finally(() => {
+      setName("");
+      setTagline("");
+      setDescription("");
+      setImageUrl("");
+      setFirstBrewed("");
+      setBrewersTips("");
+      setAttenuationLevel(0);
+      setContributedBy("");
+    });
+
+    /*fetch("https://ih-beers-api2.herokuapp.com/beers/new", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newBeer),
+  })
+    .then((response) => response.json())
+    .then((parsed)=>{
+      console.log("new beer created !", response.data);
+    })
+    .catch((error)=> console.log(error))
+    .finally(()=>{
+      setName("");
+      setTagline("");
+      setDescription("");
+      setImageUrl("");
+      setFirstBrewed("");
+      setBrewersTips("");
+      setAttenuationLevel(0);
+      setContributedBy("");
+    });*/
+}
   // 3. Once the beer is created, navigate the user to the page showing the list of all beers.
+  const navigate = useNavigate()
 
-
+ 
 
   // Structure and the content of the page showing the form for adding a new beer. You can leave this as it is.
   return (
@@ -122,7 +179,7 @@ function AddBeerPage() {
             value={contributedBy}
             onChange={handleContributedBy}
           />
-          <button className="btn btn-primary btn-round">Add Beer</button>
+          <button className="btn btn-primary btn-round" onClick={handleSubmit}>Add Beer</button>
         </form>
       </div>
     </>

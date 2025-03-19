@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import beersJSON from "./../assets/beers.json";
 
@@ -14,6 +14,16 @@ function RandomBeersPage() {
   
   // TASKS:
   // 1. Set up an effect hook to make a request for a random beer from the Beers API.
+  /*useEffect(()=>{
+    async function getRandomBeer() {
+      try {
+        //const 
+      } catch (error) {
+        console.log(error);
+      }
+      
+    }("https://ih-beers-api2.herokuapp.com/beers/random")
+  })*/
   // 2. Use axios to make a HTTP request.
   // 3. Use the response data from the Beers API to update the state variable.
 
